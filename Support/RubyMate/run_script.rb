@@ -31,12 +31,13 @@ TextMate::Executor.run(cmd, :version_args => ["--version"]) do |str, type|
       htmlize(str).gsub(/[EF]+/, "<span style=\"color: red\">\\&</span>") +
             "<br style=\"display: none\"/>"
     elsif is_test_script
-      out = str.map do |line|
+      out = [str].flatten.map do |line|
         if line =~ /^(\s+)(\S.*?):(\d+)(?::in\s*`(.*?)')?/
           indent, file, line, method = $1, $2, $3, $4
           url, display_name = '', 'untitled document';
           unless file == "-"
             indent += " " if file.sub!(/^\[/, "")
+            file = File.join(ENV['TM_PROJECT_DIRECTORY'], file) unless file =~ /^\//
             url = '&amp;url=file://' + e_url(file)
             display_name = File.basename(file)
           end
