@@ -1,0 +1,24 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.7	//
+RakeTaskRunner	RakeMate/run_rake_task.rb	/^class RakeTaskRunner$/;"	class	line:5
+RubyRequires	lib/ruby_requires.rb	/^module RubyRequires$/;"	module	line:6
+actual_path_name	RubyMate/run_old_script.rb	/^def actual_path_name(path)$/;"	method	line:77
+add_requires	lib/ruby_requires.rb	/^  def add_requires( code, reqs )$/;"	method	line:21
+build_rake_command	RakeMate/run_rake_task.rb	/^  def build_rake_command(task, *options)$/;"	method	line:30
+build_requires	lib/ruby_requires.rb	/^  def build_requires( code, libs )$/;"	method	line:9
+charlie	RubyMate/test.rb	/^def charlie$/;"	method	line:13
+e_js_sh	bin/linked_ri.rb	/^def e_js_sh(str)$/;"	method	line:23
+fetch_rake_tasks	RakeMate/run_rake_task.rb	/^def fetch_rake_tasks(*args, &block)$/;"	method	line:45
+html_error	RakeMate/rake_mate.rb	/^def html_error(error)$/;"	method	line:17
+initialize	RakeMate/run_rake_task.rb	/^  def initialize$/;"	method	line:6
+link_methods	bin/linked_ri.rb	/^def link_methods(prefix, methods)$/;"	method	line:27
+path_to_url_chunk	RubyMate/run_old_script.rb	/^def path_to_url_chunk(path)$/;"	method	line:60
+place_requires	lib/ruby_requires.rb	/^  def place_requires( code, new_reqs )$/;"	method	line:14
+ri	bin/linked_ri.rb	/^def ri(term)$/;"	method	line:34
+run	RakeMate/run_rake_task.rb	/^  def run(task = nil, *options, &block)$/;"	method	line:10
+run_rake_task	RakeMate/run_rake_task.rb	/^def run_rake_task(*args, &block)$/;"	method	line:41
+toggle_block	bin/toggle_block.rb	/^def toggle_block( block_text )$/;"	method	line:12
