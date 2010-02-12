@@ -28,8 +28,7 @@ TextMate::Executor.run(cmd, :version_args => ["--version"], :script_args => ARGV
   case type
   when :out
     if is_test_script and str =~ /\A[.EF]+\Z/
-      htmlize(str).gsub(/[EF]+/, "<span style=\"color: red\">\\&</span>") +
-            "<br style=\"display: none\"/>"
+      htmlize(str).gsub(/[EF]+/, "<span style=\"color: red\">\\&</span>").gsub(/\.+/, "<span style=\"color: green\">\\&</span>") + "<br style=\"display: none\"/>"
     elsif is_test_script
       out = [str].flatten.map do |line|
         if line =~ /^(\s+)(\S.*?):(\d+)(?::in\s*`(.*?)')?/
@@ -44,14 +43,16 @@ TextMate::Executor.run(cmd, :version_args => ["--version"], :script_args => ARGV
           "#{indent}<a class='near' href='txmt://open?line=#{line + url}'>" +
           (method ? "method #{CGI::escapeHTML method}" : '<em>at top level</em>') +
           "</a> in <strong>#{CGI::escapeHTML display_name}</strong> at line #{line}<br/>"
+        elsif line =~ /\A\s*test:.*?\.\s*\(.*?\):\s*[.EF]\n?\Z/
+          htmlize(line.chomp).gsub(/([EF])\Z/, "<span style=\"color: red\">\\1</span>").gsub(/(\.)\Z/, "<span style=\"color: green\">\\1</span>") + "<br/><br style=\"display: none\"/>"
         elsif line =~ /(\[[^\]]+\]\([^)]+\))\s+\[([\w\_\/\.]+)\:(\d+)\]/
           spec, file, line = $1, $2, $3, $4
           file = File.join(ENV['TM_PROJECT_DIRECTORY'], file) unless file =~ /^\//
-          "<a style=\"color: blue;\" href=\"txmt://open?url=file://#{e_url(file)}&amp;line=#{line}\">#{spec}:#{line}</a><br/>"
-        elsif line =~ /([\w\_]+).*\[([\w\_\/\.]+)\:(\d+)\]/
-          method, file, line = $1, $2, $3
+          "<a style=\"color: blue;\" href=\"txmt://open?url=file://#{e_url(file)}&amp;line=#{line}\">#{spec}</a>:#{line}<br/>"
+        elsif line =~ /(.*?:)?([\w\_ ]+).*\[([\w\_\/\.]+)\:(\d+)\]/
+          method, file, line = $2, $3, $4
           file = File.join(ENV['TM_PROJECT_DIRECTORY'], file) unless file =~ /^\//
-          "<a style=\"color: blue;\" href=\"txmt://open?url=file://#{e_url(file)}&amp;line=#{line}\">#{File.basename(file)}:#{line}</a><br/>"
+          "<a style=\"color: blue;\" href=\"txmt://open?url=file://#{e_url(file)}&amp;line=#{line}\">#{File.basename(file)}</a>:#{line}<br/>"
         elsif line =~ /^\d+ tests, \d+ assertions, (\d+) failures, (\d+) errors\b.*/
           "<span style=\"color: #{$1 + $2 == "00" ? "green" : "red"}\">#{$&}</span><br/>"
         else
@@ -61,7 +62,7 @@ TextMate::Executor.run(cmd, :version_args => ["--version"], :script_args => ARGV
       out.join()
     else
       htmlize(str)
-    end    
+    end
   when :err
     "<span style=\"color: red\">#{htmlize str}</span>"
   end
