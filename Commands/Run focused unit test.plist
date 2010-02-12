@@ -47,10 +47,12 @@ export RUBYLIB="$TM_BUNDLE_SUPPORT/RubyMate${RUBYLIB:+:$RUBYLIB}"
 	<string>1</string>
 	<key>input</key>
 	<string>document</string>
+	<key>keyEquivalent</key>
+	<string>@R</string>
 	<key>lineCaptureRegister</key>
 	<string>2</string>
 	<key>name</key>
-	<string>Run Focused Unit Test (original)</string>
+	<string>Run Focused Unit Test</string>
 	<key>output</key>
 	<string>showAsHTML</string>
 	<key>scope</key>
