@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>assert ${0:test}</string>
+	<string>assert ${0:true}</string>
 	<key>name</key>
 	<string>assert(..)</string>
 	<key>scope</key>
