@@ -13,7 +13,7 @@ require "#{ENV['TM_SUPPORT_PATH']}/lib/ui.rb"
 open_files = `"$TMTOOLS" get openProjectFiles '{format=plain;}'`.split("\n")
 project_directory = ENV['TM_PROJECT_DIRECTORY']
 
-i = TextMate::UI.menu(open_files.map{|of| of.gsub(project_directory, ".")})
+i = TextMate::UI.menu(open_files.map{|of| of.gsub(project_directory, "")})
 
 exit_discard if i.nil?
 
