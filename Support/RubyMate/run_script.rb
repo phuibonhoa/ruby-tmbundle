@@ -45,6 +45,9 @@ TextMate::Executor.run(cmd, :version_args => ["--version"], :script_args => ARGV
           "</a> in <strong>#{CGI::escapeHTML display_name}</strong> at line #{line}<br/>"
         elsif line =~ /\A\s*test:.*?\.\s*\(.*?\):\s*[.EF]\n?\Z/
           htmlize(line.chomp).gsub(/([EF])\Z/, "<span style=\"color: red\">\\1</span>").gsub(/(\.)\Z/, "<span style=\"color: green\">\\1</span>") + "<br/><br style=\"display: none\"/>"
+        elsif line =~ /\A\s*(test:.*?\.\s*\(.*?\):\s*)(.*)\Z/m
+          test_header, test_output = $1, $2
+          htmlize(test_header.chomp) + "<br/><br style=\"display: none\"/>" + htmlize(test_output) + "<br/><br style=\"display: none\"/>"
         elsif line =~ /(\[[^\]]+\]\([^)]+\))\s+\[([\w\_\/\.]+)\:(\d+)\]/
           spec, file, line = $1, $2, $3, $4
           file = File.join(ENV['TM_PROJECT_DIRECTORY'], file) unless file =~ /^\//
