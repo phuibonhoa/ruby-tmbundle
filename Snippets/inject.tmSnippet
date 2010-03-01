@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>inject${1/.+/(/}${1:init}${1/.+/)/} { |${2:injection}, ${3:var}| $0 }</string>
+	<key>name</key>
+	<string>inject</string>
+	<key>tabTrigger</key>
+	<string>inject</string>
+	<key>uuid</key>
+	<string>97EF96A8-0801-45F3-9C68-7AF9A4D2F797</string>
+</dict>
+</plist>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby -w
+original = STDIN.read
+spacing, s = original.match(/^(\s*)(.*)/)[1..2]
+s.chomp!
+
+start = s.clone
+start[0,1] = start[0,1].upcase
+start = " #{start} "
+filler = ''.center(70, '=')
+puts "#{spacing}##{filler}"
+puts "#{spacing}##{start.center(70, '=')}"
+puts "#{spacing}##{filler}"
+puts "#{spacing}$0"
+s = " End #{s} "
+puts "#{spacing}##{filler}"
+puts "#{spacing}##{s.center(70, '=')}"
+puts "#{spacing}##{filler}"
+</string>
+	<key>fallbackInput</key>
+	<string>line</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>^~@/</string>
+	<key>name</key>
+	<string>Test Header/Footer</string>
+	<key>output</key>
+	<string>insertAsSnippet</string>
+	<key>scope</key>
+	<string>source.ruby</string>
+	<key>uuid</key>
+	<string>12D7D243-D39D-4BDE-95DB-26F997C9CC3A</string>
+</dict>
+</plist>

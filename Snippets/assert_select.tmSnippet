@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>assert_select '$1'</string>
+	<key>name</key>
+	<string>assert_select</string>
+	<key>tabTrigger</key>
+	<string>assel</string>
+	<key>uuid</key>
+	<string>A39E3400-3256-44C6-B8F7-BDDD811E2AE1</string>
+</dict>
+</plist>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>cattr_writer :${0:attr_names}</string>
+	<key>name</key>
+	<string>cattr_writer</string>
+	<key>scope</key>
+	<string>source.ruby</string>
+	<key>tabTrigger</key>
+	<string>cw</string>
+	<key>uuid</key>
+	<string>FE17CBB7-A721-434C-8638-95BFF627CA61</string>
+</dict>
+</plist>

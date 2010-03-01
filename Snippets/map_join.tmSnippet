@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>map { |${1:k,v}| "${2:#{k\} =&gt; #{v\}}" }.join("${3:, }")${0}</string>
+	<key>name</key>
+	<string>map_join</string>
+	<key>scope</key>
+	<string>source.ruby</string>
+	<key>tabTrigger</key>
+	<string>mapjoin</string>
+	<key>uuid</key>
+	<string>757D994A-11BA-4AF4-B80A-EE3EEF7744EB</string>
+</dict>
+</plist>

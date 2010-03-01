@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>assert_model_equality(${1:expected}, ${0:actual})</string>
+	<key>name</key>
+	<string>assert_model_equality</string>
+	<key>scope</key>
+	<string>source.ruby</string>
+	<key>tabTrigger</key>
+	<string>asme</string>
+	<key>uuid</key>
+	<string>86678102-3ED9-4949-A246-096E0A7FC2F1</string>
+</dict>
+</plist>

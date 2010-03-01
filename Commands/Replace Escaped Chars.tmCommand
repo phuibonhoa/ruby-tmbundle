@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby -w
+# just to remind you of some useful environment variables
+# see Help / Environment Variables for the full list
+# echo File: "$TM_FILEPATH"
+# echo Word: "$TM_CURRENT_WORD"
+# echo Selection: "$TM_SELECTED_TEXT"
+
+out = STDIN.read
+out = out.gsub('\\\\r\\\\n', "\n")
+out = out.gsub('\\\\n', "\n")
+out = out.gsub('\\\\t', "\t")
+out = out.gsub('\\\"', "\"")
+
+out = out.gsub('\r\n', "\n")
+out = out.gsub('\n', "\n")
+out = out.gsub('\t', "\t")
+out = out.gsub('\"', "\"")
+
+puts out</string>
+	<key>input</key>
+	<string>document</string>
+	<key>keyEquivalent</key>
+	<string>^H</string>
+	<key>name</key>
+	<string>Replace Escaped Chars</string>
+	<key>output</key>
+	<string>replaceDocument</string>
+	<key>scope</key>
+	<string>text</string>
+	<key>uuid</key>
+	<string>10F6C824-A771-4B2E-BA22-90584D112F5C</string>
+</dict>
+</plist>

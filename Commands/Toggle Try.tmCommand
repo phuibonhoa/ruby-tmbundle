@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+
+input = STDIN.read
+
+
+if input =~ /try/
+  
+  result = input.match(/^(.*?)try\(?\s*(.*?)\)?\z/)
+  prepend = result[1].to_s.chomp('.')
+
+  if result[2].include?(',')
+    function, args = result[2].match(/(.*?),\s*(.*)/)[1, 2]
+  else
+    function = result[2]
+    args = nil
+  end
+  
+  function = eval(function).to_s
+  args = "(#{args})" unless args.nil?
+  print "#{prepend}.#{function}#{args}"
+else
+  match = input.match(/(.*?)\.(.*)/)
+  
+  if match and match[1] and match[2]
+    prepend, result = match[1,2]
+    prepend &lt;&lt; '.'
+  else
+    prepend = ''
+    result = input.clone
+  end
+
+  if result =~ /[\s\(]/
+    function, args = result.match(/(.+?)[\s\(](.*)[\)\z]/)[1,2]
+  else
+    function = result
+    args = nil
+  end
+  
+  args = ", #{args}" unless args.nil?
+  print "#{prepend}try(:#{function}#{args})"
+end</string>
+	<key>fallbackInput</key>
+	<string>scope</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>^?</string>
+	<key>name</key>
+	<string>Toggle Try</string>
+	<key>output</key>
+	<string>replaceSelectedText</string>
+	<key>scope</key>
+	<string>source.ruby</string>
+	<key>uuid</key>
+	<string>B9BEA538-989C-4FD0-AB63-2CB40865E99B</string>
+</dict>
+</plist>

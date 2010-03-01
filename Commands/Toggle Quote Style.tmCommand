@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+
+# Custom Toggle Quote Style so that %Q{} is replaced with %Q!!
+# I removed the Key Equivalent from Ruby:Toggle Quote Style, so that it does not conflict with this command
+
+
+class String
+  def escape(char)
+    gsub(/\\.|#{Regexp.quote(char)}/) { |match| match == char ? "\\#{char}" : match }
+  end
+
+  def unescape(char)
+    gsub(/\\./) { |match| match == "\\#{char}" ? char : match }
+  end
+end
+
+print case str = STDIN.read
+  # Handle standard quotes
+  when /\A"(.*)"\z/m;          "'"   + $1.unescape('"').escape("'") + "'"
+  when /\A'(.*)'\z/m;          "%Q!" + $1.unescape("'").escape("!") + "!"
+  when /\A%[Qq]?!(.*)!\z/m;  '"'   + $1.unescape("!").escape('"') + '"'
+
+  # Handle the more esoteric quote styles
+  when /\A%[Qq]?\[(.*)(\])\z/m,
+       /\A%[Qq]?\((.*)(\))\z/m,
+       /\A%[Qq]?&lt;(.*)(&gt;)\z/m;  '"' + $1.unescape($2).escape('"') + '"'
+  when /\A%[Qq]?(.)(.*)\1\z/m; '"' + $2.unescape($1).escape('"') + '"'
+
+  # Handle shell escapes
+  when /\A`(.*)`\z/m;          "%x{" + $1.unescape("`").escape("}") + "}"
+  when /\A%x\{(.*)\}\z/m;      "`"   + $1.unescape("}").escape("`") + "`"
+
+  # Default case
+  else str
+end
+</string>
+	<key>fallbackInput</key>
+	<string>scope</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>name</key>
+	<string>Toggle Quote Style</string>
+	<key>output</key>
+	<string>replaceSelectedText</string>
+	<key>scope</key>
+	<string>source.ruby string.quoted.double, source.ruby string.quoted.single, source.ruby string</string>
+	<key>uuid</key>
+	<string>4BCDD159-2B47-4FC3-9138-FED9A3135E29</string>
+</dict>
+</plist>

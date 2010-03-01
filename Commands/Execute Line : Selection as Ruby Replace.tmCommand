@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+
+# execure the code
+begin
+  r = eval(STDIN.read)
+rescue Object
+  r = $!.class.to_s
+end
+
+# try to_s, if it doesnt work use inspect
+# Array and Hash are shown via inspect because they look better with formating
+# do this just if the script did not print anything itself
+print( (r.class != Hash and r.class != Array and not r.nil? and r.respond_to? :to_s) ? r.to_s : r.inspect )
+print( "\n" ) unless ENV.has_key?('TM_SELECTED_TEXT')
+</string>
+	<key>fallbackInput</key>
+	<string>line</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>^E</string>
+	<key>name</key>
+	<string>Execute Line / Selection as Ruby Replace</string>
+	<key>output</key>
+	<string>replaceSelectedText</string>
+	<key>uuid</key>
+	<string>31F20474-E815-411E-B6F2-8C34EA000109</string>
+</dict>
+</plist>
