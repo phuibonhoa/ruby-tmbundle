@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>alias_method :${1:method}_without_${2:feature}, :$1
-alias_method :$1, :$1_with_$2
-
-${4:def $1_with_$2
+	<string>${4:def $1_with_$2
   $1_without_$2
   $3
-end}</string>
+end}
+alias_method :${1:method}_without_${2:feature}, :$1
+alias_method :$1, :$1_with_$2
+</string>
 	<key>name</key>
 	<string>alias_method X 2</string>
 	<key>scope</key>
