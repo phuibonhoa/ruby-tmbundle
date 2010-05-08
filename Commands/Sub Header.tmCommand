@@ -25,8 +25,6 @@ print "#{spacing}$0"</string>
 	<string>Sub Header</string>
 	<key>output</key>
 	<string>insertAsSnippet</string>
-	<key>scope</key>
-	<string>source.ruby</string>
 	<key>uuid</key>
 	<string>CCE9DB8F-6F03-4E51-BD93-597D0D11E671</string>
 </dict>
