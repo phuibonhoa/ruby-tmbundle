@@ -3,14 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>assert_equal ${1:expected}, ${0:actual}</string>
+	<string>assert_equal({$1}, ${0:actual}</string>
 	<key>name</key>
-	<string>assert_equal</string>
+	<string>assert_equal(...)</string>
 	<key>scope</key>
 	<string>source.ruby</string>
 	<key>tabTrigger</key>
-	<string>ase</string>
+	<string>ase(</string>
 	<key>uuid</key>
-	<string>43A61A22-6BEE-4997-961C-1CDE739C05FE</string>
+	<string>00AE3FE5-AE94-4A96-A1B0-730660F7D7E0</string>
 </dict>
 </plist>
