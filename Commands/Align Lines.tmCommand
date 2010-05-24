@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+
+require "#{ENV['TM_SUPPORT_PATH']}/lib/ui.rb"
+require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_tm_helpers.rb"
+
+input = $stdin.read
+if input.empty?
+  puts "Please select something"
+  exit_show_tool_tip
+end
+
+align_to = TextMate::UI.request_string(:title =&gt; "Align To", :prompt =&gt; "Enter the first few characters of the word you wanted to align to", :default =&gt; "")
+
+lines = input.split("\n")
+header = lines.shift
+chars = header.index(align_to)
+out = lines.map { |line| line.sub(/^\s+/, ' ' * chars) }.join("\n")
+
+puts header
+puts out</string>
+	<key>fallbackInput</key>
+	<string>none</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>~:</string>
+	<key>name</key>
+	<string>Align Lines</string>
+	<key>output</key>
+	<string>replaceSelectedText</string>
+	<key>scope</key>
+	<string>source.ruby</string>
+	<key>uuid</key>
+	<string>55B91BF1-7348-407B-B499-E61A620CE478</string>
+</dict>
+</plist>
