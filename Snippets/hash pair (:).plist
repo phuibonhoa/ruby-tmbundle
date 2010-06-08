@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>:${1:key} =&gt; ${0:"${2:value}"}</string>
+	<string>:${1:key} =&gt; ${2:"${3:value}"}$0</string>
 	<key>name</key>
 	<string>Hash Pair — :key =&gt; "value"</string>
 	<key>scope</key>

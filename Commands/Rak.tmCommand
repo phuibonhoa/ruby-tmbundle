@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+
+require "#{ENV['TM_SUPPORT_PATH']}/lib/ui.rb"
+require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_tm_helpers.rb"
+
+rak_options = TextMate::UI.request_string(:title =&gt; "Rak", :prompt =&gt; "Rak parameters", :default =&gt; "")
+
+Dir.chdir(ENV['TM_PROJECT_DIRECTORY'])
+
+results = `rak #{rak_options}`
+p results
+out = ''
+current_file = nil
+results.split("\n").each do |line|
+  out_line = line
+
+  #file path
+  if line =~ /^[A-Za-z\/].*$/
+    current_file = line
+    out_line = "&lt;h2&gt;#{line}&lt;/h2&gt;"
+
+  #line no
+  elsif line =~ /^\s*\d+\|/
+    line_number = line.match(/^\s*(\d+)\|/)[1]
+    path = File.join(ENV['TM_PROJECT_DIRECTORY'], current_file)
+    out_line = %Q!&lt;a href="txmt://open?url=file://#{path}&amp;line=#{line_number}"&gt;#{line}&lt;/a&gt;!
+  end
+  
+  out &lt;&lt; out_line
+end
+
+puts out</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>~R</string>
+	<key>name</key>
+	<string>Rak</string>
+	<key>output</key>
+	<string>openAsNewDocument</string>
+	<key>scope</key>
+	<string>source.ruby</string>
+	<key>uuid</key>
+	<string>2C505CAB-DF37-4542-804D-30F404B346C3</string>
+</dict>
+</plist>
