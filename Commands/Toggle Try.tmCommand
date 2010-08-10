@@ -10,7 +10,7 @@
 input = STDIN.read
 
 
-if input =~ /try/
+if input =~ /^(.*?)try\(?\s*(.*?)\)?\z/
   
   result = input.match(/^(.*?)try\(?\s*(.*?)\)?\z/)
   prepend = result[1].to_s.chomp('.')
@@ -23,12 +23,23 @@ if input =~ /try/
   end
   
   function = eval(function).to_s
-  args = "(#{args})" unless args.nil?
-  print "#{prepend}.#{function}#{args}"
-else
-  match = input.match(/(.*?)\.(.*)/)
+
+  if function == '[]'
+    print "#{prepend}[#{args}]"
+  else
+    args = "(#{args})" unless args.nil?
+    print "#{prepend}.#{function}#{args}"
+  end
   
-  if match and match[1] and match[2]
+else
+  
+  if input =~ /\[(.*)\]/
+    print input.sub(/\[(.*)\]/, '.try(:[], \1)')
+    exit 
+  end
+  
+  if input =~ /(.*?)\.(.*)/
+    match = input.match(/(.*?)\.(.*)/)
     prepend, result = match[1,2]
     prepend &lt;&lt; '.'
   else
@@ -36,15 +47,14 @@ else
     result = input.clone
   end
 
-  if result =~ /[\s\(]/
-    function, args = result.match(/(.+?)[\s\(](.*)[\)\z]/)[1,2]
+  if result =~ /(.+?)[\s\(](.*)\)?/
+    function, args = result.match(/(.+?)[\s\(](.*)\)?/)[1,2]
   else
     function = result
     args = nil
   end
-  
-  args = ", #{args}" unless args.nil?
-  print "#{prepend}try(:#{function}#{args})"
+    
+  print "#{prepend}try(:#{[function, args].compact.join(', ')})"
 end</string>
 	<key>fallbackInput</key>
 	<string>scope</string>
