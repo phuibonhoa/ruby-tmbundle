@@ -5,7 +5,7 @@
 	<key>content</key>
 	<string>@execute_result</string>
 	<key>name</key>
-	<string>untitled</string>
+	<string>execute_result</string>
 	<key>scope</key>
 	<string>source.ruby</string>
 	<key>tabTrigger</key>
