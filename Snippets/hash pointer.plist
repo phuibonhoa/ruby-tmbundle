@@ -9,7 +9,7 @@
 	<key>name</key>
 	<string>Hash Pointer — =&gt;</string>
 	<key>scope</key>
-	<string>source.ruby</string>
+	<string>source.ruby, meta.section.attributes.haml</string>
 	<key>uuid</key>
 	<string>B9E3A6DF-875D-11D9-897C-000393CBCE2E</string>
 </dict>
