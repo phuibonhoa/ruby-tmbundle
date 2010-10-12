@@ -18,6 +18,9 @@ if is_test_script and not ENV['TM_FILE_IS_UNTITLED']
                               ["lib"] )
     if File.exist? lib_path
       cmd << "-I#{lib_path}:#{test_path}:#{test_parent_path}"
+    else
+      lib_path = File.join(File.dirname(test_parent_path), 'lib')
+      cmd << "-I#{lib_path}:#{test_path}:#{test_parent_path}" if File.exist? lib_path
     end
   end
 end
