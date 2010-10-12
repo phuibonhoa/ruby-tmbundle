@@ -16,11 +16,11 @@ if input.empty?
   exit_show_tool_tip
 end
 
-align_to = TextMate::UI.request_string(:title =&gt; "Align To", :prompt =&gt; "Enter the first few characters of the word you wanted to align to", :default =&gt; "")
+align_to = TextMate::UI.request_string(:title =&gt; "Align To", :prompt =&gt; "Enter the first few characters of the word you wanted to align to", :default =&gt; ":")
 
 lines = input.split("\n")
 header = lines.shift
-chars = header.index(align_to)
+chars = header.index(align_to).to_i
 out = lines.map { |line| line.sub(/^\s+/, ' ' * chars) }.join("\n")
 
 puts header
