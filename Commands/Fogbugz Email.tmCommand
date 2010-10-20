@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby -wKU
+require ENV['TM_SUPPORT_PATH'] + '/lib/escape.rb'
+require 'erb'
+require 'open-uri'
+require 'net/http' 
+require 'digest/sha1'
+
+def title_for_url(ticket_id)
+  "View Ticket:#{ticket_id} on FogBugz"
+end
+
+def fogbugz_url(ticket_id)
+  "https://bookrenter.fogbugz.com/default.asp?#{ticket_id}"
+end
+
+def simple_format(string)
+  string.gsub(' ', '&amp;nbsp;').gsub("\n", '&lt;br/&gt;')
+end
+
+out = ''
+STDIN.readlines.each do |line|
+  line = simple_format(line)
+  result = line.match(/FB(\d+):/)
+  if result
+    ticket_id = result[1]
+    replacement = %Q!&lt;a href="#{fogbugz_url(ticket_id)}" title="#{title_for_url(ticket_id)}"&gt;FB#{ticket_id}&lt;/a&gt;:!
+    out &lt;&lt; line.gsub(/FB(\d+):/, replacement)
+  else
+    out &lt;&lt; line
+  end
+end  
+
+puts out</string>
+	<key>input</key>
+	<string>document</string>
+	<key>name</key>
+	<string>Fogbugz Email</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>uuid</key>
+	<string>1D40CE2B-F774-40F0-87FB-5275B2092562</string>
+</dict>
+</plist>
