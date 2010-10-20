@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+
+input = STDIN.read
+
+
+if input =~ /^(.*?)try_if_available\(?\s*(.*?)\)?\z/
+  
+  result = input.match(/^(.*?)try_if_available\(?\s*(.*?)\)?\z/)
+  prepend = result[1].to_s.chomp('.')
+
+  if result[2].include?(',')
+    function, args = result[2].match(/(.*?),\s*(.*)/)[1, 2]
+  else
+    function = result[2]
+    args = nil
+  end
+  
+  function = eval(function).to_s
+
+  if function == '[]'
+    print "#{prepend}[#{args}]"
+  else
+    args = "(#{args})" unless args.nil?
+    print "#{prepend}.#{function}#{args}"
+  end
+  
+else
+  
+  if input =~ /\[(.*)\]/
+    print input.sub(/\[(.*)\]/, '.try_if_available(:[], \1)')
+    exit 
+  end
+  
+  if input =~ /(.*?)\.(.*)/
+    match = input.match(/(.*?)\.(.*)/)
+    prepend, result = match[1,2]
+    prepend &lt;&lt; '.'
+  else
+    prepend = ''
+    result = input.clone
+  end
+
+  if result =~ /(.+?)[\s\(](.*)\)?/
+    function, args = result.match(/(.+?)[\s\(](.*)\)?/)[1,2]
+  else
+    function = result
+    args = nil
+  end
+    
+  print "#{prepend}try_if_available(:#{[function, args].compact.join(', ')})"
+end</string>
+	<key>fallbackInput</key>
+	<string>scope</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>^~?</string>
+	<key>name</key>
+	<string>Toggle Try If Available</string>
+	<key>output</key>
+	<string>replaceSelectedText</string>
+	<key>scope</key>
+	<string>source.ruby</string>
+	<key>uuid</key>
+	<string>52B3139A-59F3-4390-A47B-C25D768E9613</string>
+</dict>
+</plist>
