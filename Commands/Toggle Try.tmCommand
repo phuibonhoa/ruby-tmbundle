@@ -57,7 +57,7 @@ else
   print "#{prepend}try(:#{[function, args].compact.join(', ')})"
 end</string>
 	<key>fallbackInput</key>
-	<string>scope</string>
+	<string>word</string>
 	<key>input</key>
 	<string>selection</string>
 	<key>keyEquivalent</key>
