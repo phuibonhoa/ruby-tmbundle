@@ -23,9 +23,9 @@ end
 
 print case str = STDIN.read
   # Handle standard quotes
-  when /\A"(.*)"\z/m;          "'"   + $1.unescape('"').escape("'") + "'"
-  when /\A'(.*)'\z/m;          "%Q!" + $1.unescape("'").escape("!") + "!"
-  when /\A%[Qq]?!(.*)!\z/m;  '"'   + $1.unescape("!").escape('"') + '"'
+  when /\A"(.*)"\z/m;          "%Q!" + $1.unescape('"').escape("!") + "!"
+  when /\A'(.*)'\z/m;          '"'   + $1.unescape("'").escape('"') + '"'
+  when /\A%[Qq]?!(.*)!\z/m;    "'"   + $1.unescape('!').escape("'") + "'"
 
   # Handle the more esoteric quote styles
   when /\A%[Qq]?\[(.*)(\])\z/m,
