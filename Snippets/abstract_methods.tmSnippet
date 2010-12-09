@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>abstract_methods :${1:method_names}${2:, :visibility =&gt; :private, :as =&gt; :class_methods}$0</string>
+	<key>name</key>
+	<string>abstract_methods</string>
+	<key>scope</key>
+	<string>source.ruby</string>
+	<key>tabTrigger</key>
+	<string>abm</string>
+	<key>uuid</key>
+	<string>03CDC3C9-A796-44BD-ADF8-DF237A224B4F</string>
+</dict>
+</plist>

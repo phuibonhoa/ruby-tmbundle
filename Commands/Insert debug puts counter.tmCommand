@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby -w
+
+if File.exists? File.join(ENV['TM_BUNDLE_SUPPORT'],'debug_puts_counter.txt')
+	lines = File.readlines(File.join(ENV['TM_BUNDLE_SUPPORT'],'debug_puts_counter.txt'))
+	counter = lines.first.to_i
+else
+	counter = 1
+end
+
+puts %Q!$1puts "DEBUG - #{counter}: $2"$0!
+
+File.open(File.join(ENV['TM_BUNDLE_SUPPORT'],'debug_puts_counter.txt'), 'w') do |file|
+	file &lt;&lt; counter + 1
+end</string>
+	<key>input</key>
+	<string>none</string>
+	<key>name</key>
+	<string>Insert debug puts counter</string>
+	<key>output</key>
+	<string>insertAsSnippet</string>
+	<key>scope</key>
+	<string>source.ruby</string>
+	<key>uuid</key>
+	<string>39CB53AD-11C4-4E23-AD4D-3C68E8A21BDA</string>
+</dict>
+</plist>
