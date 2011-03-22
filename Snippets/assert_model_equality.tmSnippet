@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>assert_model_equality(${1:expected}, ${0:actual})</string>
+	<string>assert_model_equality ${1:expected}, ${0:actual}</string>
 	<key>name</key>
 	<string>assert_model_equality</string>
 	<key>scope</key>
