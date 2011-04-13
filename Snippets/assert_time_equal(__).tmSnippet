@@ -5,7 +5,7 @@
 	<key>content</key>
 	<string>assert_time_equal ${1:expected_float}, ${2:actual_float}</string>
 	<key>name</key>
-	<string>assert_time_equal(..)</string>
+	<string>assert_time_equal</string>
 	<key>scope</key>
 	<string>source.ruby</string>
 	<key>tabTrigger</key>
