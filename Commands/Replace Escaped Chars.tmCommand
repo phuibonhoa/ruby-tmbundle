@@ -23,6 +23,9 @@ out = out.gsub('\n', "\n")
 out = out.gsub('\t', "\t")
 out = out.gsub('\"', "\"")
 
+out = out.gsub('&amp;lt;', '&lt;')
+out = out.gsub('&amp;gt;', '&gt;')
+
 puts out</string>
 	<key>input</key>
 	<string>document</string>
