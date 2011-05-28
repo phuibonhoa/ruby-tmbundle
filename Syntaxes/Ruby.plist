@@ -262,7 +262,7 @@
 			<key>comment</key>
 			<string>keywords associated with state machine DSLs</string>
 			<key>match</key>
-			<string>\b(state_machine|event|before_transition|after_transition|transition)\b(?![?!])</string>
+			<string>\b(state_machine|before_transition|after_transition|transition)\b(?![?!])</string>
 			<key>name</key>
 			<string>keyword.other.special-method.state_machine.ruby</string>
 		</dict>
