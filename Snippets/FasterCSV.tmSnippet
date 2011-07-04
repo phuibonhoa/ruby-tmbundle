@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>FasterCSV.foreach(${1:filepath}, ${2::headers =&gt; true, :header_converters =&gt; FasterCSV::HeaderConverters[:symbol]}) do |${3:row}|
+  $0
+end</string>
+	<key>name</key>
+	<string>FasterCSV (read)</string>
+	<key>scope</key>
+	<string>source.ruby</string>
+	<key>tabTrigger</key>
+	<string>FasterCSV</string>
+	<key>uuid</key>
+	<string>85986E56-3D0D-41B4-B7F3-AA0F1D8B9397</string>
+</dict>
+</plist>
