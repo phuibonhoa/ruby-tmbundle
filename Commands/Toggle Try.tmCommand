@@ -27,7 +27,10 @@ if input =~ /^(.*?)try\(?\s*(.*?)\)?\z/
   if function == '[]'
     print "#{prepend}[#{args}]"
   else
-    args = "(#{args})" unless args.nil?
+    unless args.nil?
+      args = "(#{args}"
+      args &lt;&lt; ")" unless input[-1, 1] == ')' 
+    end
     print "#{prepend}.#{function}#{args}"
   end
   
@@ -53,8 +56,10 @@ else
     function = result
     args = nil
   end
-    
-  print "#{prepend}try(:#{[function, args].compact.join(', ')})"
+  
+  output = "#{prepend}try(:#{[function, args].compact.join(', ')}"
+  output &lt;&lt; ")" unless input[-1, 1] == ')'
+  print output
 end</string>
 	<key>fallbackInput</key>
 	<string>word</string>
