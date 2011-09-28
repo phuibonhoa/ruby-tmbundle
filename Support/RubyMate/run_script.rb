@@ -1,3 +1,4 @@
+require 'drb/drb'
 require ENV["TM_SUPPORT_PATH"] + "/lib/tm/executor"
 require ENV["TM_SUPPORT_PATH"] + "/lib/tm/save_current_document"
 
@@ -6,7 +7,24 @@ TextMate.save_current_document
 is_test_script = ENV["TM_FILEPATH"] =~ /(?:\b|_)(?:tc|ts|test)(?:\b|_)/ or
   File.read(ENV["TM_FILEPATH"]) =~ /\brequire\b.+(?:test\/unit|test_helper)/
 
-cmd = [ENV['TM_RUBY'] || 'ruby', '-rcatch_exception']
+SPORK_SERVER_URI="druby://localhost:#{ENV["SPORK_PORT"] || 8988}"
+
+def spork?
+  # return false
+  @spork ||= lambda{
+    begin
+      return false if ENV['SPORK_TESTUNIT'].nil?
+      spork_server = DRbObject.new_with_uri(SPORK_SERVER_URI)
+      if spork_server.respond_to?(:run)
+        return true
+      end
+    rescue Exception => e
+      return false
+    end
+  }.call
+end
+
+cmd = spork? ? ['testdrb'] : [ENV['TM_RUBY'] || 'ruby', '-rcatch_exception']
 
 if is_test_script and not ENV['TM_FILE_IS_UNTITLED']
   path_ary = (ENV['TM_ORIG_FILEPATH'] || ENV['TM_FILEPATH']).split("/")
@@ -25,9 +43,17 @@ if is_test_script and not ENV['TM_FILE_IS_UNTITLED']
   end
 end
 
+if spork?
+  test = ARGV.last.gsub(/--name=/, '') if ARGV.last and ARGV.last.match(/--name=/)
+  cmd << "-n#{test}" if test
+  script_args = []
+else
+  script_args = ARGV
+end
+
 cmd << ENV["TM_FILEPATH"]
 
-TextMate::Executor.run(cmd, :version_args => ["--version"], :script_args => ARGV) do |str, type|
+TextMate::Executor.run(cmd, :version_args => ["--version"], :script_args => script_args) do |str, type|
   case type
   when :out
     if is_test_script and str =~ /\A[.EF]+\Z/
