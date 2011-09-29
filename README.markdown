@@ -20,6 +20,13 @@
 
 If you'd like to install all my bundles, check out this [script](http://gist.github.com/443129) written by [mkdynamic](http://github.com/mkdynamic).  It installs all bundles and backups any existing bundles with conflicting names.  Thanks Mark!
 
+###Using [Spork](https://github.com/timcharper/spork) with focus tests:
+* gem install spork --pre (requires spork-0.9.rc9)
+* open TextMate preferences and set environment variable SPORK_TESTUNIT=true
+* initialize your app for spork (see spork README)
+* open a terminal window, cd to the root of your rails app and run spork command.
+* focus tests will be run through spork.
+
 ##My Other Textmate Bundles
 My bundles work best when use in conjunction with my other bundles:
 
