@@ -3,20 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>${4:def $1_with_$2
-  $1_without_$2
-  $3
-end}
-alias_method :${1:method}_without_${2:feature}, :$1
-alias_method :$1, :$1_with_$2
-</string>
+	<string>alias_method_chain :${1:method}, :${2:feature}$0</string>
 	<key>name</key>
-	<string>alias_method X 2</string>
+	<string>alias_method_chain</string>
 	<key>scope</key>
 	<string>source.ruby</string>
 	<key>tabTrigger</key>
 	<string>amc</string>
 	<key>uuid</key>
-	<string>717681DC-C11F-49AD-B004-77C5D20BAB0D</string>
+	<string>49D80C42-F376-4966-8A7B-F66A697E377D</string>
 </dict>
 </plist>
