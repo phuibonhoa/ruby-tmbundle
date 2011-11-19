@@ -28,12 +28,13 @@ out = ''
 STDIN.readlines.each do |line|
   line = simple_format(line)
   
-  if result = line.match(/FB(\s|&amp;nbsp;)?(\d+):/)
+  if result = line.match(/FB(\s|&amp;nbsp;)?(\d+)/)
     ticket_id = result[2]
-    replacement = %Q!&lt;a href="#{fogbugz_url(ticket_id)}" title="#{title_for_url(ticket_id)}"&gt;FB #{ticket_id}&lt;/a&gt;:!
-    out &lt;&lt; line.gsub(/FB(\s|&amp;nbsp;)?(\d+):/, replacement)
+    delimiter = result[1]
+    replacement = %Q!&lt;a href="#{fogbugz_url(ticket_id)}" title="#{title_for_url(ticket_id)}"&gt;FB#{delimiter}#{ticket_id}&lt;/a&gt;!
+    out &lt;&lt; line.gsub(/FB(\s|&amp;nbsp;)?(\d+)/, replacement)
   elsif line =~ /----.*----/
-    out &lt;&lt; %Q!&lt;b&gt;#{line}&lt;/b&gt;!
+    out &lt;&lt; %Q!&lt;br/&gt;&lt;b&gt;#{line}&lt;/b&gt;!
   else
     out &lt;&lt; line
   end
