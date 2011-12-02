@@ -10,6 +10,7 @@
  * Lots of new snippets and commands:
    * <code>⌃⇧+/</code> Toggle try or not (ie cow.moo <-> cow.try(:moo))
    * <code>⌃+H</code> Replaces escaped characters in plain text files (sometimes ruby outputs \n \" etc)
+   * <code>⌃⇧⌥+:</code> Converts hash in selected text to aligned multiline format 
    * Clean up and addition of lots of new snippets
 
 ##Installation
