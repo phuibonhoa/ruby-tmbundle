@@ -26,7 +26,7 @@ out = lines.map { |line| line.sub(/^\s+/, ' ' * chars) }.join("\n")
 puts header
 puts out</string>
 	<key>fallbackInput</key>
-	<string>none</string>
+	<string>line</string>
 	<key>input</key>
 	<string>selection</string>
 	<key>keyEquivalent</key>
