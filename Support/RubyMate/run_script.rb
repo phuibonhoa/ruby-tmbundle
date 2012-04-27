@@ -170,7 +170,7 @@ class TestResultParser
         test_result = all_lines
       end
       
-      style = if line =~ /E|F$/
+      style = if line =~ /(E|F)$/
         'color:red; font-weight:bold;'
       else
         'color:green;'
