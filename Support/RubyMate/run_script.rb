@@ -179,7 +179,7 @@ class TestResultParser
       test_has_puts = !(test_puts.nil? || test_puts.strip == "")
       
       out = "<div style=\"#{style}padding: 1px 9px 0 9px;#{'background-color: #EFEFEF; border-top-left-radius: 5px; border-top-right-radius: 5px;' if test_has_puts}\">#{test_result}</div>"
-      out << "<div style=\"color: #141414; background-color: #EFEFEF; padding: 2px 9px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; margin-bottom: 5px\">#{test_puts}</div>" if test_has_puts
+      out << "<div style=\"color: #141414; background-color: #EFEFEF; padding: 2px 9px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; margin-bottom: 5px\">#{htmlize(test_puts)}</div>" if test_has_puts
       out
     else
       ""
