@@ -159,7 +159,7 @@ class TestResultParser
     if line =~ /= [\.EF]$/
       @in_buffer = false
       
-      all_lines = buffer.join("\n")      
+      all_lines = buffer.join
       match = all_lines.match(/(.*?(\.  = ))(.*?)([\d\.]+ . = [\.EF])\Z/m)
       
       if match
