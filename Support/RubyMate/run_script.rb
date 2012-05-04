@@ -145,11 +145,11 @@ class TestResultParser
   end
   
   def test_result_line?(line)
-    line =~ /^\w+#test:/ || in_buffer?
+    line =~ /^\w+#test[:_]/ || in_buffer?
   end
   
   def process_line(line)    
-    if line =~ /^\w+#test:/
+    if line =~ /^\w+#test[:_]/
       @buffer = [line]
       @in_buffer = true
     elsif in_buffer?
