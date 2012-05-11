@@ -1,4 +1,5 @@
 require 'drb/drb'
+require 'uri'
 require ENV["TM_SUPPORT_PATH"] + "/lib/tm/executor"
 require ENV["TM_SUPPORT_PATH"] + "/lib/tm/save_current_document"
 
@@ -52,96 +53,68 @@ end
 
 cmd << ENV["TM_FILEPATH"]
 
-def start_of_test?(line)
-  !!(line =~ /\s*test:/)
-end
-
-def end_of_test?(line)
-  !!(line =~ /[.EF]: \([\d.]+\)/)
-end
-
-def last_line?(line)
-  !!(line =~ /tests.*assertions.*failures.*errors/)
-end
-
-#test: .bulk_shipment_items distributor_return should include ship_to_distributors. :.: (0.200692)
-# 1:"test: "  --  throw away
-# 2:".bulk_shipment_items distributor_return should include ship_to_distributors"  --  test name
-# 3:". :"  --  throw away
-# 4:""  --  any puts in the test
-# 5:".:"  --  throw away
-# 6:"."  --  test result . or E or F
-# 7:"0.200692"  --  duration
-def test_parts_with_duration(string)
-  result = string.match(/\A\s*(test:\s*)(.*?)(\.\s*:)(.*)(([.EF]):)\s*\(([\d.]+)\)\s*\z/m)
-  
-  if result.nil?
-    nil
-  else
-    [result[2], result[4].sub(/^\s+/, ''), result[6], result[7]]
-  end
-end
-
-# str = "test: schema should truth. (RedemptionTest): .\n" A 
-# 1:"test: "  --  throw away
-# 2:"schema should truth. (RedemptionTest)"  --  test name
-# 3:":"  --  throw away
-# 4:""  --  any puts in the test
-# 5:"."  --  test result . or E or F
-def test_parts_without_duration(string)
-  result = string.match(/\A\s*(test:\s*)(.*?)(\.\s*:)(.*)([.EF])\s*\z/m)
-  
-  if result.nil?
-    nil
-  else
-    [result[2], result[4], result[5], nil]
-  end
-end
-
-# str = "test: schema should truth. (RedemptionTest): .\n" A 
-# str = " test: schema should truth. :\t\t\t\tdebug\n" A 
-def format_output(string)
-  test_name, test_puts, test_result, test_duration = if string =~ /(([.EF]):)\s*\(([\d.]+)\)\s*\z/m
-    test_parts_with_duration(string)
-  else
-    test_parts_without_duration(string)
-  end
-  
-  if test_name.nil?
-    out = htmlize(string)
-  else
-    out = "&nbsp;&nbsp;#{format_test_result(test_result)}&nbsp;&nbsp;#{format_test_name(test_name, test_result)}"
-    out << ":&nbsp;(#{test_duration})" if test_duration
-    out << "<br/>"
-    out << %Q!<div style="background-color:#E6E6E6; padding: 5px 10px">#{htmlize(test_puts)}</div>! unless test_puts.strip.empty?
-  end
-  
-  out
-end
-
-def format_test_name(test_name, result)
-  out = test_name
-  out = %Q!<span style="font-weight:bold">#{test_name}</span>! unless result == '.'
-  out
-end
 
 def format_test_result(result)
   result.gsub(/[EF]+/, "<span style=\"color: red; font-weight:bold\">\\&</span>").gsub(/\.+/, "<span style=\"color: green; font-weight:bold\">\\&</span>")
 end
 
-test_script_buffer = ''
-test_script_output = ''
-past_test_run = false #set to true once tests have been completed and now printing the errors/failures
-
 
 class TestResultParser
   
-  attr_reader :buffer, :in_buffer
+  attr_reader :buffer, :in_buffer, :printed_header
   alias :in_buffer? :in_buffer
+  alias :printed_header? :printed_header
   
   def initialize
     @buffer = []
     @in_buffer = false
+    @printed_header = false
+  end
+  
+  def header
+    <<-EOT
+<link href="file://#{URI.escape ENV['TM_BUNDLE_SUPPORT']}/assets/buttons.css" type="text/css" rel="stylesheet"/>
+<style>
+  #toggle {
+    float:right;
+  }
+
+  .red {
+    color:red; 
+    font-weight:bold;
+  }
+  
+  .green {
+    color:green;
+  }
+  
+  .puts {
+    color: #141414; 
+    background-color: rgba(0, 0, 0, 0.2); 
+    padding: 2px 9px; 
+    border-bottom-left-radius: 5px; 
+    border-bottom-right-radius: 5px; 
+    margin-bottom: 5px
+  }
+  
+  .test_name {
+    padding: 1px 9px 0 9px;
+  }
+  
+  .puts_header {
+    background-color: rgba(0, 0, 0, 0.2); 
+    border-top-left-radius: 5px; 
+    border-top-right-radius: 5px;
+  }
+</style>
+<div id="toggle" class="btn btn-inverse btn-mini">Hide Passing Tests</div><br/>
+<script src="file://#{URI.escape ENV['TM_BUNDLE_SUPPORT']}/assets/jquery-1.6.4.min.js" type="text/javascript"></script>
+<script>$('#toggle').toggle(
+  function() { $('.green').slideUp(); $('#toggle').removeClass('btn-inverse').addClass('btn-success').text('Show Passing Tests') },
+  function() { $('.green').slideDown(); $('#toggle').removeClass('btn-success').addClass('btn-inverse').text('Hide Passing Tests') }
+  );
+</script>
+    EOT
   end
   
   def test_result_line?(line)
@@ -170,19 +143,28 @@ class TestResultParser
         test_result = all_lines
       end
       
-      style = if line =~ /(E|F)$/
-        'color:red; font-weight:bold;'
+      css_class = if line =~ /(E|F)$/
+        'red'
       else
-        'color:green;'
+        'green'
       end
       
       test_has_puts = !(test_puts.nil? || test_puts.strip == "")
       
-      out = "<div style=\"#{style}padding: 1px 9px 0 9px;#{'background-color: rgba(0, 0, 0, 0.2); border-top-left-radius: 5px; border-top-right-radius: 5px;' if test_has_puts}\">#{test_result}</div>"
-      out << "<div style=\"color: #141414; background-color: rgba(0, 0, 0, 0.2); padding: 2px 9px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; margin-bottom: 5px\">#{htmlize(test_puts)}</div>" if test_has_puts
+      out = "<div class=\"#{css_class} test_name #{'puts_header' if test_has_puts}\">#{test_result}</div>"
+      out << "<div class=\"#{css_class} puts\">#{htmlize(test_puts)}</div>" if test_has_puts
       out
     else
       ""
+    end
+  end
+  
+  def post_filter(output)
+    if printed_header?
+      output
+    else
+      @printed_header = true
+      header + output
     end
   end
 end
@@ -190,7 +172,7 @@ end
 trp = TestResultParser.new
 
 TextMate::Executor.run(cmd, :version_args => ["--version"], :script_args => script_args) do |str, type|  
-  case type
+  output = case type
   when :out
     if is_test_script and str =~ /\A[.EF]+\Z/
       format_test_result(htmlize(str)) + "<br style=\"display: none\"/>"
@@ -220,6 +202,12 @@ TextMate::Executor.run(cmd, :version_args => ["--version"], :script_args => scri
       htmlize(str)
     end
   when :err
-    "<span style=\"color: red\">#{htmlize str}</span>"
+    if str.include? "activesupport-3.0.10/lib/active_support/dependencies.rb:239:in `block in require': iconv will be deprecated in the future, use String#encode instead."
+      ''
+    else
+      "<span style=\"color: red\">#{htmlize str}</span>"
+    end
   end
+  
+  trp.post_filter(output)
 end
