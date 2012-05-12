@@ -62,13 +62,17 @@ end
 class TestResultParser
   
   attr_reader :buffer, :in_buffer, :printed_header
+  attr_accessor :test_file
   alias :in_buffer? :in_buffer
   alias :printed_header? :printed_header
+  alias :test_file? :test_file
   
-  def initialize
+  def initialize(attributes={})
+    attributes = {test_file: false}.merge(attributes)
     @buffer = []
     @in_buffer = false
     @printed_header = false
+    @test_file = attributes.fetch(:test_file)
   end
   
   def header
@@ -160,7 +164,7 @@ class TestResultParser
   end
   
   def post_filter(output)
-    if printed_header?
+    if printed_header? or !test_file?
       output
     else
       @printed_header = true
@@ -169,7 +173,7 @@ class TestResultParser
   end
 end
 
-trp = TestResultParser.new
+trp = TestResultParser.new(:test_file => is_test_script)
 
 TextMate::Executor.run(cmd, :version_args => ["--version"], :script_args => script_args) do |str, type|  
   output = case type
