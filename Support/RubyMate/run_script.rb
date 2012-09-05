@@ -175,6 +175,19 @@ end
 
 trp = TestResultParser.new(:test_file => is_test_script)
 
+if ENV['TM_BUNDLE'] || ENV['TM_RUBY'].to_s =~ /\.rvm/
+  bundle_cmd = if ENV['TM_BUNDLE']
+    ENV['TM_BUNDLE'] 
+  else
+    file = File.readlines(ENV['TM_RUBY'])
+    ruby_gemset = file.detect { |line| line =~ /source/ }.match(/environments\/([^'"]+)/)[1]
+    base_dir = ENV['TM_RUBY'].match(/(.*.rvm\/).*/)[1]
+    File.join(base_dir, 'gems', ruby_gemset, 'bin', 'bundle')
+  end
+    
+  cmd = [bundle_cmd, 'exec'] + cmd
+end
+
 TextMate::Executor.run(cmd, :version_args => ["--version"], :script_args => script_args) do |str, type|  
   output = case type
   when :out
