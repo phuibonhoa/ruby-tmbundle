@@ -3,6 +3,9 @@
 ##Description
 
 ####Changes
+ * Added rvm / bundler support for `⌘+R`, `⇧⌘+R`
+   * If you have an [rvm wrapper for textmate](https://rvm.io/integration/textmate/) in env `TM_RUBY`, it will try to bundle exec using the same ruby and gemset as your wrapper.
+   * You may explicitly set the path to a bundle executable in `TM_BUNDLE` to force it to always use that executable to bundle exec.
  * Updated to allow running of shoulda tests
  * Fixed links of broken tests so they properly link to each line of failing test's backtrace
  * Cleaned up output of running tests
