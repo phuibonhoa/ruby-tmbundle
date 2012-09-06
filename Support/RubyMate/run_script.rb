@@ -184,8 +184,10 @@ if ENV['TM_BUNDLE'] || ENV['TM_RUBY'].to_s =~ /\.rvm/
     base_dir = ENV['TM_RUBY'].match(/(.*.rvm\/).*/)[1]
     File.join(base_dir, 'gems', ruby_gemset, 'bin', 'bundle')
   end
-    
-  cmd = [bundle_cmd, 'exec'] + cmd
+  
+  if File.exists?(bundle_cmd)
+    cmd = [bundle_cmd, 'exec'] + cmd
+  end
 end
 
 TextMate::Executor.run(cmd, :version_args => ["--version"], :script_args => script_args) do |str, type|  
