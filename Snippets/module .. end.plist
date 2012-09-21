@@ -3,13 +3,15 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>module ${1:`#!/usr/bin/env ruby
+	<string>module ${1:`$(type -p "${TM_RUBY:-ruby}") -e "
     require 'rubygems'
-    require "active_support"
+    require 'active_support/inflector'
     puts (ENV['TM_FILENAME'] || 'some_model.rb').gsub(/\.rb$/, '').camelize.singularize
-	`}
+	"`}
 	$0
-end</string>
+end
+
+</string>
 	<key>name</key>
 	<string>module .. end</string>
 	<key>scope</key>
