@@ -68,7 +68,7 @@ class TestResultParser
   alias :test_file? :test_file
   
   def initialize(attributes={})
-    attributes = {test_file: false}.merge(attributes)
+    attributes = {:test_file => false}.merge(attributes)
     @buffer = []
     @in_buffer = false
     @printed_header = false
