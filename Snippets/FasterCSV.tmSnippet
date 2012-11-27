@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>FasterCSV.foreach(${1:filepath}, ${2::headers =&gt; true, :header_converters =&gt; FasterCSV::HeaderConverters[:symbol]}) do |${3:row}|
+	<string>CSV.foreach(${1:file_path}, ${2::headers =&gt; true, :header_converters =&gt; FasterCSV::HeaderConverters[:symbol]}) do |${3:row}|
   $0
 end</string>
 	<key>name</key>
-	<string>FasterCSV (read)</string>
+	<string>CSV (read)</string>
 	<key>scope</key>
 	<string>source.ruby</string>
 	<key>tabTrigger</key>
-	<string>FasterCSV</string>
+	<string>CSV</string>
 	<key>uuid</key>
 	<string>85986E56-3D0D-41B4-B7F3-AA0F1D8B9397</string>
 </dict>

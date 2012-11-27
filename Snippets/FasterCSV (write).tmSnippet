@@ -3,16 +3,16 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>FasterCSV.open(${1:filepath}, 'w', ${2::headers =&gt; ${3:HEADERS}, :header_converters =&gt; FasterCSV::HeaderConverters[:symbol]}) do |${4:row}|
+	<string>CSV.open(${1:file_path}, 'w', ${2::headers =&gt; ${3:HEADERS}, :header_converters =&gt; FasterCSV::HeaderConverters[:symbol]}) do |${4:row}|
   $0
 end
 </string>
 	<key>name</key>
-	<string>FasterCSV (write)</string>
+	<string>CSV (write)</string>
 	<key>scope</key>
 	<string>source.ruby</string>
 	<key>tabTrigger</key>
-	<string>FasterCSV</string>
+	<string>CSV</string>
 	<key>uuid</key>
 	<string>D22BE20F-CCE7-4EC1-8363-67891F0B158E</string>
 </dict>
