@@ -5,7 +5,7 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-	<string>#!/usr/bin/env ruby
+	<string>#!/System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby
 
 # Custom Toggle Quote Style so that %Q{} is replaced with %Q!!
 # I removed the Key Equivalent from Ruby:Toggle Quote Style, so that it does not conflict with this command

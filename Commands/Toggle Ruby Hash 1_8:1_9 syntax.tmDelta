@@ -4,6 +4,15 @@
 <dict>
 	<key>changed</key>
 	<dict>
+		<key>command</key>
+		<string>#!/System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby
+
+print case str = STDIN.read
+  when /=&gt;/;                 str.gsub(/:(\w+)[\s]+=&gt;[\s]+/, '\1: ')
+  when /(\w+):/;             str.gsub(/(\w+):(\s*(?:"(?:\\"|[^"])*"|'(?:\\'|[^'])*'|\w+\([^)]*\)|[^,]+))/, ":\\1 =&gt;\\2")
+  else;                      str
+end
+</string>
 		<key>scope</key>
 		<string>source.ruby</string>
 	</dict>
