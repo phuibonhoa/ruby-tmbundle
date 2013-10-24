@@ -126,7 +126,7 @@ class TestResultParser
   end
 
   def process_line(line)
-    if line =~ /^\w+#test[:_]/
+    if line =~ /^\w+#test[:_]/ || line =~ /= [\.EF]$/
       @buffer = [line]
       @in_buffer = true
     elsif in_buffer?
