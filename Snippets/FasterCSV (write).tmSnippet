@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>CSV.open(${1:file_path}, 'w', ${2:headers: ${3:HEADERS}, header_converters: CSV::HeaderConverters[:symbol]}) do |${4:row}|
+	<string>CSV.open(${1:file_path}, 'w', ${2:headers: ${3:HEADERS}, header_converters: CSV::HeaderConverters[:symbol]}) do |${4:csv}|
   $0
 end
 </string>
